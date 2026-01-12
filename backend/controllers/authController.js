@@ -1,10 +1,11 @@
-const authService = require('../services/auth.services');
+const User = require("../models/user");
+const authService = require("../services/auth.services");
 const jwt = require('jsonwebtoken');
-const User = require("../models/user")
+
 async function login(req , res){
     try{
         const {email, password} = req.body;
-        const {accessToken, refreshToken} = await authService.LogOrReg(email,password);
+        const {accessToken, refreshToken, user} = await authService.LogOrReg(email,password);
 
         res.cookie('refreshToken', refreshToken,{
             httpOnly: true,
@@ -12,7 +13,8 @@ async function login(req , res){
             sameSite:'strict'
         });
         return res.status(200).json({
-            accessToken
+            accessToken,
+            user
         });
 
     } catch(error){

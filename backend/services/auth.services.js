@@ -1,30 +1,37 @@
 require('dotenv').config();
+const User = require('../models/user');
+
 const express = require("express");
 const bcrypt  = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User =require('../models/user');
+
 const { createAccessToken, createRefreshToken } = require("../utils/token");
 
 async function  LogOrReg(email,password){
+
+
 if(!email || !password){
     throw new Error("Invalid email or password");
 }
-const user = await User.findOne({email});
+let user = await User.findOne({email});
 
 if(!user){
     const hashedPassword = await bcrypt.hash(password,10);
-    const User = await User.create({
-email,
-password:hashedPassword
+        user = await User.create({
+      email,
+     password:hashedPassword
 });
 }
 
 
 //login
-const isMtach = await bcrypt.compare(password,hashedPassword);
-if(!isMtach){
-    throw new Error("Invalid email or password");
-}
+  else {
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      throw new Error("Invalid email or password");
+    }
+  }
 
 
 //tokens
