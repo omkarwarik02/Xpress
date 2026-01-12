@@ -15,8 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.get('/', (req, res) => {
-  res.send('API running');
-});
+app.use('/auth', require('./routes/auth.routes'));
+app.use('/refresh', require('./routes/refresh.routes'));
 
 module.exports = app;

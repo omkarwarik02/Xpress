@@ -21,3 +21,6 @@ async function Logout(req,res){
         return res.sendStatus(204);
     }
 }
+module.exports = {
+    Logout
+}
