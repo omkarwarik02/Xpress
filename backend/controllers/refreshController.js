@@ -1,5 +1,6 @@
-const jwt = require('jsonwebtoken');
 const User = require("../models/user");
+const jwt = require('jsonwebtoken');
+
 
 async function Refresh(req, res) {
     try{
@@ -11,7 +12,7 @@ async function Refresh(req, res) {
             refreshToken,
             Process.env.REFRESH_SECRET
         );
-        const user = await UserActivation.findById(payload.userId);
+        const user = await User.findById(payload.userId);
         if(!user || user.refreshToken !== refreshToken){
             return res.sendStatus(403);
         }
