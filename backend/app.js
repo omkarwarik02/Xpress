@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/refresh', require('./routes/refresh.routes'));
-
+app.use('/post', require('./routes/post.routes'));
 
 app.use((req, res, next) => {
   const error = new Error(`Route ${req.originalUrl} not found`);

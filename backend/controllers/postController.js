@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 
-async function PostController(req, res){
+async function CreatePost(req, res, next){
     try {
         if(!req.file){
             res.status(400).json({
@@ -23,3 +23,4 @@ async function PostController(req, res){
             next(error);
     }
 }
+module.exports = {CreatePost};
