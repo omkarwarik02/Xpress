@@ -1,9 +1,12 @@
+const { decode } = require("jsonwebtoken");
 const Post = require("../models/post");
 
 async function CreatePost(req, res, next){
     try {
+        
+
         if(!req.file){
-            res.status(400).json({
+             return res.status(400).json({
                 message:"Image is required",
             })
         }

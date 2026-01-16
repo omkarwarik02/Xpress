@@ -2,16 +2,16 @@ const multer = require('multer');
 const path = require('path')
 
 const storage = multer.diskStorage({
-    destination: function(req,res,cb){
-        cb(null, '/uploads')
+    destination: function(req,file,cb){
+        cb(null, 'uploads/')
     },
-    filename:function(req,res,cb){
+    filename:function(req,file,cb){
         cb(null,file.originalname)
     }
 
 });
 
-const fileFilter = (req,res,cb)=>{
+const fileFilter = (req,file,cb)=>{
     const allowedTypes = /jpeg|jpg|png|webp/;
     const isValid = allowedTypes.test(file.mimetype) && allowedTypes.test(path.extname(file.originalname).toLowerCase());
 
