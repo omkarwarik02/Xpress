@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 420px;
+    padding: 2rem;
+     border: 1px solid #ddd;
+     border-radius: 2rem;
+}
+.username{
+    display: flex;
+    gap: 2rem;
+    margin: 20px 10px 20px;
+}
+.password{
+    display: flex;
+    gap: 2rem;
+    margin: 20px 10px 20px;
+}
+.flex-btn1{
+    display: flex;
+    position: relative;
+    justify-content: center;
+     margin: 20px 10px 20px;
+     width: 100%;
+}
+.flex-btn2{
+        display: flex;
+    position: relative;
+    justify-content: center;
+     margin: 20px 10px 20px;
+     width: 100%;
+}
+
