@@ -1,52 +1,92 @@
-require('dotenv').config();
-const User = require('../models/user');
+require("dotenv").config();
 
-const express = require("express");
-const bcrypt  = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-const { createAccessToken, createRefreshToken } = require("../utils/token");
-
-async function  LogOrReg(email,password){
+const User = require("../models/user");
 
 
-if(!email || !password){
-    throw new Error("Invalid email or password");
-}
-let user = await User.findOne({email});
 
-if(!user){
-    const hashedPassword = await bcrypt.hash(password,10);
-        user = await User.create({
-      email,
-     password:hashedPassword
-});
+function createAccessToken(userId) {
+  return jwt.sign(
+    { id: userId },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: "15m" }
+  );
 }
 
+function createRefreshToken(userId) {
+  return jwt.sign(
+    { id: userId },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "7d" }
+  );
+}
 
-//login
-  else {
-    const isMatch = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) {
-      throw new Error("Invalid email or password");
-    }
+
+async function register(email, password) {
+  if (!email || !password) {
+    throw new Error("Email and password are required");
   }
 
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new Error("User already exists");
+  }
 
-//tokens
-const accessToken = createAccessToken(user._id);
-const refreshToken = createRefreshToken(user._id);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-return {
+  const user = await User.create({
+    email,
+    password: hashedPassword,
+  });
+
+  const accessToken = createAccessToken(user._id);
+  const refreshToken = createRefreshToken(user._id);
+
+  return {
     accessToken,
     refreshToken,
-    user:{
-        id:user._id,
-        email:user.email
-    }
-};
+    user: {
+      id: user._id,
+      email: user.email,
+    },
+  };
 }
+
+
+
+async function login(email, password) {
+  if (!email || !password) {
+    throw new Error("Email and password are required");
+  }
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error("Invalid email or password");
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error("Invalid email or password");
+  }
+
+  const accessToken = createAccessToken(user._id);
+  const refreshToken = createRefreshToken(user._id);
+
+  return {
+    accessToken,
+    refreshToken,
+    user: {
+      id: user._id,
+      email: user.email,
+    },
+  };
+}
+
+
+
 module.exports = {
-    LogOrReg
+  register,
+  login,
 };
