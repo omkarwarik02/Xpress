@@ -1,0 +1,41 @@
+.posts-grid {
+  display: grid;
+  grid-template-columns: 1fr;   /* ONE column = vertical feed */
+  gap: 16px;
+  padding: 16px;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;      /* image → like → caption */
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px;
+  width: 100%;
+  max-width: 500px;            /* feed width */
+  margin: 0 auto;              /* center card on page */
+}
+
+.post-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.like-btn {
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #f87171;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.caption {
+  margin-top: 8px;
+  text-align: center;
+  color: #e5e7eb;
+}

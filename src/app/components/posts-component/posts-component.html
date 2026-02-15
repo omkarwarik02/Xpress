@@ -1,0 +1,23 @@
+@if (loading) {
+  <p class="loading">Loading posts...</p>
+} @else {
+  <div class="posts-grid">
+    @for (post of posts; track post._id) {
+      <div class="post-card">
+
+        <img
+          class="post-image"
+          [src]="'http://localhost:3000/uploads/' + post.image"
+          alt="post image"
+        />
+
+        <button class="like-btn">
+          ❤️ Like
+        </button>
+
+        <p class="caption">{{ post.caption }}</p>
+
+      </div>
+    }
+  </div>
+}
