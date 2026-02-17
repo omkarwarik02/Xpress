@@ -1,5 +1,6 @@
+
 @if (loading) {
-  <p class="loading">Loading posts...</p>
+  <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"[style]="{ width: '50px', height: '50px' }" class="spinner"></p-progress-spinner>
 } @else {
   <div class="posts-grid">
     @for (post of posts; track post._id) {
@@ -10,12 +11,20 @@
           [src]="'http://localhost:3000/uploads/' + post.image"
           alt="post image"
         />
-
-        <button class="like-btn">
-          ❤️ Like
-        </button>
-
+ <p-toast/>
+       <p-button icon="pi pi-heart" severity="danger" (click)="likePost(post)" class="like-btn" >
+        <p-badge
+    [value]="post.likesCount"
+    severity="danger"
+  
+ 
+   
+  ></p-badge>
+</p-button>
         <p class="caption">{{ post.caption }}</p>
+        <div class="user-name">
+          <p-message>{{post.user.email}}</p-message>
+        </div>
 
       </div>
     }

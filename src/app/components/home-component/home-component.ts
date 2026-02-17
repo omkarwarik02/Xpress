@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
-
+import { Component,inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-home-component',
-  imports: [],
+  imports: [ButtonModule],
   templateUrl: './home-component.html',
   styleUrl: './home-component.scss',
 })
 export class HomeComponent {
+private router = inject(Router);
+
+
+posts(){
+  this.router.navigate(['./posts']);
+}
 
 }

@@ -1,11 +1,13 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+
 import { routes } from './app.routes';
+import { authInterceptor } from './interceptors/auth.interceptor-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +20,12 @@ export const appConfig: ApplicationConfig = {
     }),
 
     provideAnimations(),
-    provideHttpClient(),
+
+    // ✅ THIS IS THE KEY FIX
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ),
+
     MessageService
   ]
 };
