@@ -1,4 +1,4 @@
-# 🚀 Xpress App
+# 🚀 Xpress WebApp
 
 Xpress App is a real-time social media–style web application that allows users to create posts, upload images, and interact through likes with instant updates. The application focuses on performance, security, and real-time user experience.
 
