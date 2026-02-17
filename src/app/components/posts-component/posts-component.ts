@@ -67,20 +67,29 @@ private messageService=inject(MessageService) ;
   }
 
 
-showToast(){
+showToastSuccess(){
   this.messageService.add({severity:'success',detail:'Liked Post'});
+}
+showToastWarn(){
+    this.messageService.add({severity:'warn',detail:'UnLiked Post'});
 }
 //like function
 likePost(post:any):void{
     console.log('POST OBJECT:', post);
   console.log('POST ID:', post._id);
 
-this.showToast()
+
   this.postsService.toggleLike(post._id).subscribe({
     next:(res)=>{
       post.likesCount = res.likesCount;
       post.likedByUser = res.likedByUser;
       this.cdr.detectChanges();
+      
+        if (res.likedByUser) {
+        this.showToastSuccess();
+      } else {
+        this.showToastWarn();
+      }
     },
     error:(err)=>{
       console.error(err);
